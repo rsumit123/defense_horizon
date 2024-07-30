@@ -1,5 +1,5 @@
 import random
-from armaments import F22, Rafale
+from armaments import F22, Rafale, F16, Gripen
 
 def calculate_missile_combat_value(speed, accuracy, range):
     return (speed * 0.4) + (accuracy * 0.4) + (range * 0.2)
@@ -33,13 +33,13 @@ def resolve_combat(player1_score, player2_score):
 def start_fighting(fighter1, fighter2):
     score1 = 0
     score2 = 0
-    for round in range(0,2):
+    for round in range(0,1):
         random_missile = random.randint(0,4)
-        print("random missile is ",random_missile)
+        #print("random missile is ",random_missile)
         missile1 = fighter1.missiles[random_missile]
-        print(f"{fighter1.name} fired {missile1.name} at {fighter2.name}")
+        #print(f"{fighter1.name} fired {missile1.name} at {fighter2.name}")
         missile2 = fighter2.missiles[random_missile]
-        print(f"{fighter2.name} fired {missile2.name} at {fighter1.name}")
+        #print(f"{fighter2.name} fired {missile2.name} at {fighter1.name}")
         fighter1_speed, fighter1_maneuver, fighter1_sa = fighter1.calculate_wvr_combat_params()
         fighter2_speed, fighter2_maneuver, fighter2_sa = fighter2.calculate_wvr_combat_params()
 
@@ -69,24 +69,38 @@ def start_fighting(fighter1, fighter2):
 
     result = resolve_combat(score1, score2)
     if result==1:
-        print(f"===> {fighter1.name} downed {fighter2.name}")
+        ...
+        #print(f"===> {fighter1.name} downed {fighter2.name}")
     elif result==2:
-        print(f"===> {fighter2.name} downed {fighter1.name}")
+        ...
+        #print(f"===> {fighter2.name} downed {fighter1.name}")
     else:
         print(f"===> Both aircrafts retreated..")
     return result
 
 count = {"1":0, "2":0, "else": 0}
-for i in range(100):
-    f22 = F22()
-    rafale = Rafale()
-    
-    result = start_fighting(f22, rafale)
+
+rafale = Rafale()
+rafale = Rafale()
+f16 = F16()
+f22 = F22()
+gripen = Gripen()
+
+for i in range(10000):
+
+    result = start_fighting(rafale, gripen)
     if result==1:
         count["1"] += 1
+        
     elif result==2:
         count["2"] += 1
     else:
         count["else"] += 1
 
 print(count)
+if count["1"] > count["2"]:
+    print(f"{rafale.name } won the battle")
+else:
+
+    print(f"{gripen.name } won the battle")
+
